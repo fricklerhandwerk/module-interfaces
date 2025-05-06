@@ -1,0 +1,17 @@
+{
+  "pins": {
+    "nixpkgs": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nixos",
+        "repo": "nixpkgs"
+      },
+      "branch": "nixpkgs-unstable",
+      "revision": "ed30f8aba41605e3ab46421e3dcb4510ec560ff8",
+      "url": "https://github.com/nixos/nixpkgs/archive/ed30f8aba41605e3ab46421e3dcb4510ec560ff8.tar.gz",
+      "hash": "0mg2wzzzakbb33z1a1qrlslr8q84j1ci9j53p9dj8nggmm2xv0p6"
+    }
+  },
+  "version": 3
+}
