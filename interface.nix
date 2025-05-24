@@ -1,33 +1,46 @@
 /**
-  A sample interface that generates strings of a given length
+  Collection of interfaces
 */
 { lib, ... }:
 let
   inherit (lib) mkOption types;
 in
 {
-  config._module.args.interfaces.string-of-length =
-    with types;
-    submodule (interface: {
-      options = {
-        input = mkOption {
-          type =
-            with types;
-            submodule (input: {
-              options.length = mkOption {
-                type = types.ints.positive;
+  options.interfaces = mkOption {
+    type =
+      with types;
+      attrsOf (
+        submodule (interface: {
+          options = {
+            input = mkOption {
+              type = types.deferredModule;
+            };
+            output = mkOption {
+              type = types.deferredModule;
+            };
+            provider = mkOption {
+              type = optionType;
+              readOnly = true;
+              default = mkOption {
+                type =
+                  with types;
+                  # TODO: we may want to have multiple providers per interface, but not convince
+                  submodule (provider: {
+                    input = mkOption {
+                      # dependent types!
+                      type = interface.config.input;
+                      readOnly = true;
+                      default = null;
+                    };
+                    output = mkOption {
+                      # dependent types!
+                      type = interface.config.output;
+                    };
+                  });
               };
-            });
-        };
-        output = mkOption {
-          type =
-            with types;
-            submodule (output: {
-              options.string = mkOption {
-                type = types.str;
-              };
-            });
-        };
-      };
-    });
+            };
+          };
+        })
+      );
+  };
 }

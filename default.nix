@@ -23,7 +23,7 @@ in
           with pkgs;
           with lib;
           ''
-            ${getExe watchexec} -w ${toString ./.} -- nix-instantiate --eval --strict ./. -A example.config.generated-string --json
+            ${getExe watchexec} -w ${toString ./.} -- nix-instantiate --eval --strict ./. -A example.config.generated-string --json "$@"
           '';
       };
     in
@@ -45,14 +45,11 @@ in
           ./interface.nix
           ./provider.nix
           ./consumer.nix
-          (module: {
-            string-producer.example.input.length = 3;
-            generated-string = module.config.string-producer.example.output.string;
-          })
+          ./string-interface.nix
         ];
       };
     in
-    assert eval.config.generated-string == "aaa";
+    assert eval.config.generated-string.output.string == "aaa";
     eval;
   test = lib.evalModules {
     modules = [
