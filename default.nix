@@ -46,6 +46,7 @@ in
           ./string-interface.nix
           ./string-provider.nix
           ./consumer.nix
+          ./configuration.nix
         ];
       };
     in
@@ -57,6 +58,7 @@ in
       ./string-interface.nix
       ./string-provider.nix
       ./consumer.nix
+      ./configuration.nix
     ];
   };
 }

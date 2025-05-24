@@ -2,8 +2,8 @@
   A sample provider for the string-generator interface
 */
 {
-  lib,
   config,
+  lib,
   ...
 }:
 let
@@ -11,13 +11,31 @@ let
 in
 {
   options.string-providers = mkOption {
-    type = with types; attrsOf config.interfaces.string-of-length.provider;
+    type = with types; submodule {
+      options = {
+        input = mkOption {
+          type = submodule {
+            options.length = mkOption {
+              type = types.ints.positive;
+              readOnly = true;
+            };
+          };
+        };
+        output = mkOption {
+          type = submodule {
+            options.string = mkOption {
+              type = types.str;
+            };
+          };
+        };
+      };
+    };
   };
 
-  config.string-providers.example = {
+  config.string-providers = {
     output.string =
       with lib;
       # TODO: somehow we need to know our provider's input value without explictly registering a consumer of this provider!
-      concatStringsSep "" (genList (_: "a") config.generated-string.input.length);
+      concatStringsSep "" (genList (_: "a") config.string-providers.input.length);
   };
 }

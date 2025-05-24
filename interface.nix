@@ -33,8 +33,8 @@ in
                     };
                     output = mkOption {
                       type = types.submodule interface.config.output;
-                      readOnly = true;
-                      default = consumer.config.provider.output;
+                      # readOnly = true;
+                      # default = consumer.config.provider.output;
                     };
                   };
                 });
@@ -48,14 +48,14 @@ in
                   options = {
                     # TODO: we don't actually want to set the consumer explicitly, otherwise "registering" both consumers and providers is unavoidable.
                     # rather, we want to pass a provider to a consumer, and then wire up passing input and output values here in the abstract interface (ideally)
-                    #consumer = mkOption {
-                    #type = interface.config.consumer;
-                    #};
-                    #input = mkOption {
-                    #type = types.submodule interface.config.input;
-                    #readOnly = true;
-                    #default = provider.config.consumer.input;
-                    #};
+                    # consumer = mkOption {
+                    #   type = interface.config.consumer;
+                    # };
+                    input = mkOption {
+                      type = types.submodule interface.config.input;
+                      # readOnly = true;
+                      # default = provider.config.consumer.input;
+                    };
                     output = mkOption {
                       type = types.submodule interface.config.output;
                     };
