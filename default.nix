@@ -45,9 +45,18 @@ in
           ./interface.nix
           ./provider.nix
           ./consumer.nix
+          (module: {
+            string-producer.example.input.length = 3;
+            generated-string = module.config.string-producer.example.output.string;
+          })
         ];
       };
     in
     assert eval.config.generated-string == "aaa";
     eval;
+  test = lib.evalModules {
+    modules = [
+      ./interface.nix
+    ];
+  };
 }

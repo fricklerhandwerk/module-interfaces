@@ -3,6 +3,7 @@
 */
 {
   config,
+  options,
   interfaces,
   lib,
   ...
@@ -14,11 +15,6 @@ in
   options = {
     generated-string = mkOption {
       type = types.str;
-      default = config.string-producer.output.string;
     };
   };
-  config = {
-    string-producer.input.length = 3;
-  };
-
 }

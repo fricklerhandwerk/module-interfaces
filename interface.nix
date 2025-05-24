@@ -25,10 +25,8 @@ in
             submodule (output: {
               options.string = mkOption {
                 type = types.str;
-                default = with lib; concatStringsSep "" (genList (_: "a") interface.config.input.length);
               };
             });
-          default = { };
         };
       };
     });
