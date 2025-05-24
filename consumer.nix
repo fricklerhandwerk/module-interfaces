@@ -18,6 +18,6 @@ in
   };
   config = {
     generated-string.input.length = 3;
-    generated-string.provider = config.string-provider;
+    generated-string.provider = config.string-providers.example;
   };
 }

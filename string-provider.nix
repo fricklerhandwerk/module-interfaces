@@ -10,10 +10,14 @@ let
   inherit (lib) mkOption types;
 in
 {
-  options.string-provider = mkOption {
-    type = with types; config.interfaces.string-of-length.provider;
-    default.output = {
-      string = with lib; concatStringsSep "" (genList (_: "a") config.string-provider.input.length);
-    };
+  options.string-providers = mkOption {
+    type = with types; attrsOf config.interfaces.string-of-length.provider;
+  };
+
+  config.string-providers.example = {
+    output.string =
+      with lib;
+      # TODO: somehow we need to know our provider's input value without explictly registering a consumer of this provider!
+      concatStringsSep "" (genList (_: "a") config.generated-string.input.length);
   };
 }

@@ -6,7 +6,7 @@ let
   inherit (lib) mkOption types;
 in
 {
-  config.interfaces.string-of-length = implementation: {
+  config.interfaces.string-of-length = {
     input = input: {
       options.length = mkOption {
         type = types.ints.positive;
