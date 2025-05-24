@@ -54,6 +54,9 @@ in
   test = lib.evalModules {
     modules = [
       ./interface.nix
+      ./string-interface.nix
+      ./string-provider.nix
+      ./consumer.nix
     ];
   };
 }

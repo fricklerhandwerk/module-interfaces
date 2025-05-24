@@ -23,33 +23,35 @@ in
               default =
                 with types;
                 submodule (consumer: {
-                  input = mkOption {
-                    type = interface.config.input;
-                  };
-                  output = mkOption {
-                    type = interface.config.output;
-                    readOnly = true;
-                    default = interface.config.provider.output;
+                  options = {
+                    input = mkOption {
+                      type = interface.config.input;
+                    };
+                    output = mkOption {
+                      type = interface.config.output;
+                      readOnly = true;
+                      default = interface.config.provider.output;
+                    };
                   };
                 });
             };
             provider = mkOption {
               type = optionType;
               readOnly = true;
-              default = mkOption {
-                type =
-                  with types;
-                  submodule (provider: {
+              default =
+                with types;
+                submodule (provider: {
+                  options = {
                     input = mkOption {
-                      type = interface.config.input;
+                      type = types.submodule interface.config.input;
                       readOnly = true;
                       default = interface.config.consumer.input;
                     };
                     output = mkOption {
-                      type = interface.config.output;
+                      type = types.submodule interface.config.output;
                     };
-                  });
-              };
+                  };
+                });
             };
           };
         })
