@@ -14,19 +14,10 @@ in
     type = with types; submodule {
       options = {
         input = mkOption {
-          type = submodule {
-            options.length = mkOption {
-              type = types.ints.positive;
-              readOnly = true;
-            };
-          };
+          type = submodule config.interfaces.string-of-length.input;
         };
         output = mkOption {
-          type = submodule {
-            options.string = mkOption {
-              type = types.str;
-            };
-          };
+          type = submodule config.interfaces.string-of-length.output;
         };
       };
     };
