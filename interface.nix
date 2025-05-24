@@ -18,22 +18,34 @@ in
             output = mkOption {
               type = types.deferredModule;
             };
+            consumer = mkOption {
+              type = types.optionType;
+              default =
+                with types;
+                submodule (consumer: {
+                  input = mkOption {
+                    type = interface.config.input;
+                  };
+                  output = mkOption {
+                    type = interface.config.output;
+                    readOnly = true;
+                    default = interface.config.provider.output;
+                  };
+                });
+            };
             provider = mkOption {
               type = optionType;
               readOnly = true;
               default = mkOption {
                 type =
                   with types;
-                  # TODO: we may want to have multiple providers per interface, but not convince
                   submodule (provider: {
                     input = mkOption {
-                      # dependent types!
                       type = interface.config.input;
                       readOnly = true;
-                      default = null;
+                      default = interface.config.consumer.input;
                     };
                     output = mkOption {
-                      # dependent types!
                       type = interface.config.output;
                     };
                   });

@@ -12,7 +12,7 @@ in
 {
   options = {
     generated-string = mkOption {
-      type = config.interfaces.string-of-length;
+      type = config.interfaces.string-of-length.consumer;
     };
 
   };
