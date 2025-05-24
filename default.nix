@@ -6,6 +6,14 @@ in
 }:
 let
   lib = import "${nixpkgs}/lib";
+  eval = lib.evalModules {
+    modules = [
+      ./interface.nix
+      ./string-interface.nix
+      ./string-provider.nix
+      ./consumer.nix
+    ];
+  };
 in
 {
   nixpkgs =
@@ -23,7 +31,7 @@ in
           with pkgs;
           with lib;
           ''
-            ${getExe watchexec} -w ${toString ./.} -- nix-instantiate --eval --strict ./. -A example.config.generated-string --json
+            ${getExe watchexec} -w ${toString ./.} -- nix-instantiate --eval --strict ./. -A example.config.generated-string.output --json "$@"
           '';
       };
     in
@@ -39,24 +47,6 @@ in
       };
     };
   example =
-    let
-      eval = lib.evalModules {
-        modules = [
-          ./interface.nix
-          ./provider.nix
-          ./consumer.nix
-          (module: {
-            string-producer.example.input.length = 3;
-            generated-string = module.config.string-producer.example.output.string;
-          })
-        ];
-      };
-    in
-    assert eval.config.generated-string == "aaa";
+    assert eval.config.generated-string.output.string == "aaa";
     eval;
-  test = lib.evalModules {
-    modules = [
-      ./interface.nix
-    ];
-  };
 }
