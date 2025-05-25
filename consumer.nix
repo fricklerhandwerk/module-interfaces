@@ -29,8 +29,6 @@ in
     consumer = with types; mkOption {
       type = submodule {
         options = {
-          inherit provider;
-
           input = mkOption {
             type = submodule config.interfaces.string-of-length.input;
           };
