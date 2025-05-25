@@ -12,6 +12,9 @@ in
       attrsOf (
         submodule (interface: {
           options = {
+            description = mkOption {
+              type = str;
+            };
             input = mkOption {
               type = deferredModule;
             };

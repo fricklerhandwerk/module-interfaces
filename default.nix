@@ -5,15 +5,13 @@ in
   nixpkgs ? sources.nixpkgs,
 }:
 let
-  lib = import "${nixpkgs}/lib";
-  eval = lib.evalModules {
+  example = lib.evalModules {
     modules = [
       ./interface.nix
-      ./string-interface.nix
-      ./string-provider.nix
-      ./consumer.nix
+      ./example
     ];
   };
+  lib = import "${nixpkgs}/lib";
 in
 {
   nixpkgs =
@@ -31,7 +29,7 @@ in
           with pkgs;
           with lib;
           ''
-            ${getExe watchexec} -w ${toString ./.} -- nix-instantiate --eval --strict ./. -A example.config.generated-string.output --json "$@"
+            ${getExe watchexec} -w ${toString ./.} -- nix-instantiate --eval --strict ./. -A example.config.string-consumer.output --json "$@"
           '';
       };
     in
@@ -47,6 +45,6 @@ in
       };
     };
   example =
-    assert eval.config.generated-string.output.string == "aaa";
-    eval;
+    assert example.config.string-consumer.output.string == "aaa";
+    example;
 }

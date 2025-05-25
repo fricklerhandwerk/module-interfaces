@@ -6,10 +6,17 @@ let
   inherit (lib) mkOption types;
 in
 {
-  config.interfaces.string-of-length = {
+  config.interfaces.repeat-character = {
+    description = "repeat a character a given number of times";
     input = input: {
       options.length = mkOption {
         type = types.ints.positive;
+      };
+      options.character = mkOption {
+        type = types.enum [
+          "a"
+          "b"
+        ];
       };
     };
     output = output: {
