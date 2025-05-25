@@ -10,38 +10,21 @@ let
   inherit (lib) mkOption types;
 in
 {
-  options.string-providers = let
-    provider = with types; mkOption {
-      type = submodule {
-        options = {
-          input = mkOption {
-            type = submodule config.interfaces.string-of-length.input;
-          };
-          output = mkOption {
-            type = submodule config.interfaces.string-of-length.output;
-          };
-        };
-      };
-    };
-
-    consumer = with types; mkOption {
-      type = submodule {
-        options = {
-          inherit provider;
-
-          input = mkOption {
-            type = submodule config.interfaces.string-of-length.input;
-          };
-          output = mkOption {
-            type = submodule config.interfaces.string-of-length.output;
-          };
-        };
-      };
-    };
-  in mkOption {
+  options.string-providers = mkOption {
     type = with types; submodule (provider: {
       options = {
-        inherit consumer;
+        consumer = with types; mkOption {
+          type = submodule {
+            options = {
+              input = mkOption {
+                type = submodule config.interfaces.string-of-length.input;
+              };
+              output = mkOption {
+                type = submodule config.interfaces.string-of-length.output;
+              };
+            };
+          };
+        };
         input = mkOption {
           type = submodule config.interfaces.string-of-length.input;
           default = provider.config.consumer.input;
