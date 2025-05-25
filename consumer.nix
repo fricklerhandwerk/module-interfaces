@@ -22,11 +22,6 @@ in
               output = mkOption {
                 type = submodule config.interfaces.string-of-length.output;
               };
-
-              # Used to break the infinite recursion.
-              consumer = mkOption {
-                type = types.anything;
-              };
             };
           });
         };
