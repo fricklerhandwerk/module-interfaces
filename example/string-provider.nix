@@ -12,11 +12,11 @@ in
 {
   options.string-provider = mkOption {
     type = config.interfaces.repeat-character.provider;
-    default = input: provider: {
-      inherit input; # sorry, boilerplate (for type safety)
-      output.string =
-        with lib;
-        concatStringsSep "" (genList (_: provider.config.input.character) provider.config.input.length);
-    };
+  };
+
+  config.string-provider = input: provider: {
+    output.string =
+      with lib;
+      concatStringsSep "" (genList (_: input.character) input.length);
   };
 }
