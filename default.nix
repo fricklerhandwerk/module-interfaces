@@ -45,6 +45,6 @@ in
       };
     };
   example =
-    assert example.config.string-consumer.output.string == "aaa";
+    assert example.config.string-consumer.output.string == "a a a";
     example;
 }
