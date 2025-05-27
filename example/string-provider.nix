@@ -10,11 +10,16 @@ let
   inherit (lib) mkOption types;
 in
 {
-  options.string-provider = mkOption {
-    type = with types; submodule {
+  options.string-providers = mkOption {
+    type = with types; attrsOf (submodule (providerSpecific: {
       options = {
         provider = mkOption {
           type = config.interfaces.repeat-character.provider;
+          default = input: provider: {
+            output.string =
+              with lib;
+              concatStringsSep providerSpecific.config.settings.inBetween (genList (_: input.character) input.length);
+          };
         };
         settings = mkOption {
           type = submodule {
@@ -27,12 +32,6 @@ in
           };
         };
       };
-    };
-  };
-
-  config.string-provider.provider = input: provider: {
-    output.string =
-      with lib;
-      concatStringsSep config.string-provider.settings.inBetween (genList (_: input.character) input.length);
+    }));
   };
 }
