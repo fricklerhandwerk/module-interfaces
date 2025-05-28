@@ -10,13 +10,28 @@ let
   inherit (lib) mkOption types;
 in
 {
-  options.string-provider = mkOption {
-    type = config.interfaces.repeat-character.provider;
-    default = input: provider: {
-      inherit input; # sorry, boilerplate (for type safety)
-      output.string =
-        with lib;
-        concatStringsSep "" (genList (_: provider.config.input.character) provider.config.input.length);
-    };
+  options.string-providers = mkOption {
+    type = with types; attrsOf (submodule (providerSpecific: {
+      options = {
+        provider = mkOption {
+          type = config.interfaces.repeat-character.provider;
+          default = input: provider: {
+            output.string =
+              with lib;
+              concatStringsSep providerSpecific.config.settings.inBetween (genList (_: input.character) input.length);
+          };
+        };
+        settings = mkOption {
+          type = submodule {
+            options = {
+              inBetween = mkOption {
+                type = enum [ "" " " "-" "/" ];
+                default = "";
+              };
+            };
+          };
+        };
+      };
+    }));
   };
 }

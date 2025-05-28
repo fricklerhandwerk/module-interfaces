@@ -8,7 +8,9 @@
   config = {
     # the integrator can set input parameters
     string-consumer.input.character = "a";
+    # configure a specific provider
+    string-providers."space separated".settings.inBetween = " ";
     # and choose a provider
-    string-consumer.provider = config.string-provider;
+    string-consumer.provider = config.string-providers."space separated".provider;
   };
 }
