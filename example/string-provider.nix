@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: EUPL-1.2
 /**
   A sample provider for the interface for generated strings
 */

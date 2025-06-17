@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: EUPL-1.2
 /**
   An example integration site for generated strings
 */

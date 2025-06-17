@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: EUPL-1.2
 let
   sources = import ./npins;
 in
